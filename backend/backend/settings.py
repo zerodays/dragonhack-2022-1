@@ -26,6 +26,8 @@ DEBUG = os.getenv('DEBUG', '').lower() in ('true', 't', 'yes',)
 
 ALLOWED_HOSTS = ['*']
 
+GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY', '')
+
 # Application definition
 
 INSTALLED_APPS = [
