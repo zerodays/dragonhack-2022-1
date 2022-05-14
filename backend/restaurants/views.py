@@ -1,5 +1,6 @@
 import json
 
+import meilisearch
 from django.db.models import OuterRef, Exists, Q
 from django.http import HttpResponse
 from django.views.decorators.http import require_GET
@@ -16,6 +17,13 @@ def json_response(data, status: int = 200) -> HttpResponse:
 def restaurants_view(request):
     restaurants = Restaurant.objects.all()
 
+    search = request.GET.get('search', '')
+    if search != '':
+        client = meilisearch.Client('http://127.0.0.1:7700')
+        results = client.index('restaurants').search(search, {'limit': 1000})
+        ids = list(map(lambda h: h['id'], results['hits']))
+        restaurants = Restaurant.objects.filter(pk__in=ids)
+
     exclude_param = request.GET.get('exclude', '')
     if exclude_param != '':
         exclude_param = exclude_param.split(',')
@@ -23,8 +31,17 @@ def restaurants_view(request):
             Q(menu_entry__restaurant=OuterRef('pk')) & ~Q(allergen__in=exclude_param))
         restaurants = restaurants.filter(Exists(outer_query))
 
-    restaurants = restaurants.order_by('name')
-    restaurants = util.to_list(restaurants)
+    if search == '':
+        restaurants = restaurants.order_by('name')
+        restaurants = util.to_list(restaurants)
+    else:
+        id_map = dict()
+        for i, idd in enumerate(ids):
+            id_map[idd] = i
+
+        restaurants = util.to_list(restaurants)
+        restaurants.sort(key=lambda rest: id_map[rest['id']])
+
     return json_response(restaurants)
 
 
