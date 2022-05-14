@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/api/api.dart';
+import 'package:frontend/models/allergens.dart';
 import 'package:frontend/models/restaurant.dart';
 import 'package:frontend/widgets/menu_card.dart';
+import 'package:provider/provider.dart';
 
 import '../models/menu.dart';
 
@@ -15,17 +17,22 @@ class RestaurantScreen extends StatefulWidget {
   State<RestaurantScreen> createState() => _RestaurantScreenState();
 }
 
-class _RestaurantScreenState extends State<RestaurantScreen> {
+class _RestaurantScreenState extends State<RestaurantScreen>
+    with TickerProviderStateMixin {
   late Future<List<Menu>> menu;
 
   @override
   void initState() {
     super.initState();
-    menu = fetchMenu(widget.restaurant.restaurantId);
+    menu = fetchMenu(widget.restaurant.restaurantId,
+        Provider.of<Allergens>(context, listen: false).userAllergens);
   }
 
   @override
   Widget build(BuildContext context) {
+    final List<String>? userAllergens = context
+        .select<Allergens, List<String>?>((Allergens all) => all.userAllergens);
+    print(userAllergens);
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,

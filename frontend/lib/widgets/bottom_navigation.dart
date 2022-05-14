@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/models/allergens.dart';
 import 'package:frontend/screens/map_screen.dart';
+import 'package:frontend/screens/wizard_screen.dart';
+import 'package:provider/provider.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({Key? key}) : super(key: key);
@@ -8,8 +11,25 @@ class BottomNavigation extends StatefulWidget {
   State<BottomNavigation> createState() => _BottomNavigationState();
 }
 
-class _BottomNavigationState extends State<BottomNavigation> {
+class _BottomNavigationState extends State<BottomNavigation>
+    with TickerProviderStateMixin {
   int currentPageIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<Allergens>(context, listen: false).setOnInitCallback((status) {
+      if (status == AppStatus.notInitialized) {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const WizardScreen()));
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   static const List<Widget> _navigationOptions = <Widget>[
     MapScreen(),

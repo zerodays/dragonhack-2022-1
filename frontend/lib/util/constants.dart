@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 Map<String, Color> allergenColor = {
-  "Cereal": Colors.yellowAccent,
+  "Cereals": Colors.yellowAccent,
   "Crustaceans": Colors.lightGreenAccent,
   "Eggs": Colors.lightGreen,
   "Fish": Colors.blueAccent,
@@ -15,3 +15,5 @@ Map<String, Color> allergenColor = {
   "Lupin": Colors.cyan,
   "Molluscs": Colors.purpleAccent
 };
+
+const String userAllergensSlug = 'userAllergens';

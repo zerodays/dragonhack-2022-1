@@ -29,9 +29,18 @@ Future<List<Restaurant>> fetchRestaurants(String? search) async {
   }
 }
 
-Future<List<Menu>> fetchMenu(int restaurantId) async {
+Future<List<Menu>> fetchMenu(int restaurantId, List<String>? filter) async {
+
+  final joinedFilter = filter?.join(",").toUpperCase();
+
+  print(joinedFilter);
+
+  final url = filter != null
+      ? Uri.parse('$apiUrl/restaurants/$restaurantId/menu/?exclude=$joinedFilter')
+      : Uri.parse('$apiUrl/restaurants/$restaurantId/menu/');
+
   final response =
-      await http.get(Uri.parse('$apiUrl/restaurants/$restaurantId/menu/'));
+      await http.get(url);
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
@@ -46,3 +55,6 @@ Future<List<Menu>> fetchMenu(int restaurantId) async {
     throw Exception('Failed to load restaurants');
   }
 }
+
+
+
