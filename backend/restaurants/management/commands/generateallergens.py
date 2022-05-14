@@ -35,6 +35,7 @@ def generate_allergens_for_entry(entry: MenuEntry):
             'moko',
             'flour',
             'wheet',
+            'burger',
         },
         MenuEntryAllergen.Allergen.CRUSTACEANS: {
             'crustacean',
@@ -50,6 +51,8 @@ def generate_allergens_for_entry(entry: MenuEntry):
         MenuEntryAllergen.Allergen.EGGS: {
             'egg',
             'jajc',
+            'majonez',
+            'mayo',
         },
         MenuEntryAllergen.Allergen.FISH: {
             'fish',
