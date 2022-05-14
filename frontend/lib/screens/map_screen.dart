@@ -14,12 +14,33 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
+  final TextEditingController _controller = TextEditingController();
   late Future<List<Restaurant>> restaurants;
+  String? search;
 
   @override
   void initState() {
     super.initState();
-    restaurants = fetchRestaurants();
+    restaurants = fetchRestaurants(search);
+  }
+
+  void _clearTextField() {
+    // Clear everything in the text field
+    _controller.clear();
+    // Call setState to update the UI
+    updateSearch(null);
+  }
+
+  void updateSearch(String? val) {
+    setState(() {
+      if (val == '') {
+        search = null;
+      } else {
+        search = val;
+      }
+
+      restaurants = fetchRestaurants(search);
+    });
   }
 
   @override
@@ -57,14 +78,25 @@ class _MapScreenState extends State<MapScreen> {
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: TextField(
+                  controller: _controller,
                   decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                          borderSide: const BorderSide(
-                              color: Colors.white, width: 0.0)),
-                      labelText: "Enter restaurant"),
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                        borderSide: const BorderSide(
+                          color: Colors.white,
+                          width: 0.0,
+                        )),
+                    labelText: "Search",
+                    suffixIcon: _controller.text.isEmpty
+                        ? null // Show nothing if the text field is empty
+                        : IconButton(
+                            icon: const Icon(Icons.clear),
+                            onPressed: _clearTextField,
+                          ), // Show the clear button if the text field has something
+                  ),
+                  onSubmitted: updateSearch,
                 ),
               )
             ]),

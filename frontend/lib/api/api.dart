@@ -5,11 +5,15 @@ import 'package:http/http.dart' as http;
 
 import '../models/menu.dart';
 
-const apiUrl = 'http://192.168.129.206:8000/api/v1';
+const apiUrl = 'https://dragonhack.zerodays.dev/api/v1';
 
-Future<List<Restaurant>> fetchRestaurants() async {
-  final response = await http
-      .get(Uri.parse('$apiUrl/restaurants/'));
+Future<List<Restaurant>> fetchRestaurants(String? search) async {
+  var url = '$apiUrl/restaurants/';
+  if (search != null) {
+    url += '?search=$search';
+  }
+
+  final response = await http.get(Uri.parse(url));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
@@ -26,8 +30,8 @@ Future<List<Restaurant>> fetchRestaurants() async {
 }
 
 Future<List<Menu>> fetchMenu(int restaurantId) async {
-  final response = await http
-      .get(Uri.parse('$apiUrl/restaurants/$restaurantId/menu/'));
+  final response =
+      await http.get(Uri.parse('$apiUrl/restaurants/$restaurantId/menu/'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
@@ -42,6 +46,3 @@ Future<List<Menu>> fetchMenu(int restaurantId) async {
     throw Exception('Failed to load restaurants');
   }
 }
-
-
-
