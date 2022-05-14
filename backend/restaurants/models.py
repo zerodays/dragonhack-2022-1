@@ -5,7 +5,7 @@ from restaurants import util
 
 
 class Restaurant(models.Model):
-    name = models.CharField(max_length=512)
+    name = models.CharField(max_length=512, db_index=True)
     description = models.TextField()
     image_url = models.CharField(max_length=1024, blank=True)
 
@@ -26,9 +26,6 @@ class Restaurant(models.Model):
         return self.name
 
     def to_dict(self) -> dict:
-        menu_entries = self.menu_entries.all().order_by('index')
-        menu_entries = util.to_list(menu_entries)
-
         return {
             'id': self.pk,
             'name': self.name,
@@ -43,18 +40,20 @@ class Restaurant(models.Model):
                 'address_country': self.address_country,
             },
             'rating': self.rating,
-            'menu': menu_entries,
         }
 
 
 class MenuEntry(models.Model):
-    restaurant = models.ForeignKey(Restaurant, related_name='menu_entries', on_delete=models.CASCADE)
+    restaurant = models.ForeignKey(Restaurant,
+                                   related_name='menu_entries',
+                                   on_delete=models.CASCADE,
+                                   db_index=True)
 
     name = models.CharField(max_length=1024)
     description = models.TextField(blank=True)
     photo_url = models.CharField(max_length=1024, blank=True)
 
-    index = models.IntegerField(default=0)
+    index = models.IntegerField(default=0, db_index=True)
 
     def __str__(self):
         return f'"{self.name}" in "{self.restaurant}"'
@@ -90,8 +89,11 @@ class MenuEntryAllergen(models.Model):
         LUPIN = 'LUPIN', _('Lupin')
         MOLLUSCS = 'MOLLUSCS', _('Molluscs')
 
-    menu_entry = models.ForeignKey(MenuEntry, related_name='allergens', on_delete=models.CASCADE)
-    allergen = models.CharField(max_length=128, choices=Allergen.choices)
+    menu_entry = models.ForeignKey(MenuEntry,
+                                   related_name='allergens',
+                                   on_delete=models.CASCADE,
+                                   db_index=True)
+    allergen = models.CharField(max_length=128, choices=Allergen.choices, db_index=True)
 
     def __str__(self):
         return self.get_allergen_display()
