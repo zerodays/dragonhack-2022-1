@@ -4,15 +4,9 @@ from restaurants.models import *
 
 @admin.register(Restaurant)
 class RestaurantAdmin(admin.ModelAdmin):
-    list_display = ('name', 'latitude', 'longitude', 'google_rating',)
+    list_display = ('name', 'latitude', 'longitude', 'rating',)
+    search_fields = ('name',)
     ordering = ('name',)
-
-
-@admin.register(GooglePhoto)
-class GooglePhotoAdmin(admin.ModelAdmin):
-    list_display = ('restaurant', 'height', 'width', 'index',)
-    list_editable = ('index',)
-    ordering = ('restaurant', 'index',)
 
 
 @admin.register(MenuEntry)

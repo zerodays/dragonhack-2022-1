@@ -7,21 +7,25 @@ from restaurants import util
 class Restaurant(models.Model):
     name = models.CharField(max_length=512)
     description = models.TextField()
+    image_url = models.CharField(max_length=1024, blank=True)
+
+    street_address = models.CharField(max_length=1024, blank=True)
+    address_locality = models.CharField(max_length=1024, blank=True)
+    postal_code = models.CharField(max_length=1024, blank=True)
+    address_country = models.CharField(max_length=1024, blank=True)
+
+    telephone = models.CharField(max_length=512, blank=True)
 
     latitude = models.FloatField()
     longitude = models.FloatField()
 
-    google_place_id = models.CharField(max_length=512, blank=True)
-    google_rating = models.FloatField(null=True, blank=True)
-    google_icon = models.CharField(max_length=1024, blank=True)
+    rating = models.FloatField(null=True, blank=True)
+    price_range = models.CharField(max_length=128, blank=True)
 
     def __str__(self):
         return self.name
 
     def to_dict(self) -> dict:
-        photos = self.google_photos.all().order_by('index')
-        photos = util.to_list(photos)
-
         menu_entries = self.menu_entries.all().order_by('index')
         menu_entries = util.to_list(menu_entries)
 
@@ -29,35 +33,17 @@ class Restaurant(models.Model):
             'id': self.pk,
             'name': self.name,
             'description': self.description,
+            'image_url': self.image_url,
             'latitude': self.latitude,
             'longitude': self.longitude,
-            'google_rating': self.google_rating,
-            'google_icon': self.google_icon,
-            'photos': photos,
+            'address': {
+                'street_address': self.street_address,
+                'address_locality': self.address_locality,
+                'postal_code': self.postal_code,
+                'address_country': self.address_country,
+            },
+            'rating': self.rating,
             'menu': menu_entries,
-        }
-
-
-class GooglePhoto(models.Model):
-    restaurant = models.ForeignKey(Restaurant, related_name='google_photos', on_delete=models.CASCADE)
-
-    height = models.IntegerField()
-    width = models.IntegerField()
-
-    photo_reference = models.CharField(max_length=1024)
-
-    index = models.IntegerField(default=0)
-
-    def __str__(self):
-        return f'Photo for {self.restaurant}'
-
-    def to_dict(self) -> dict:
-        return {
-            'id': self.pk,
-            'restaurant_id': self.restaurant.pk,
-            'height': self.height,
-            'width': self.width,
-            'photo_reference': self.photo_reference,
         }
 
 
@@ -66,6 +52,7 @@ class MenuEntry(models.Model):
 
     name = models.CharField(max_length=1024)
     description = models.TextField(blank=True)
+    photo_url = models.CharField(max_length=1024, blank=True)
 
     index = models.IntegerField(default=0)
 
@@ -81,6 +68,7 @@ class MenuEntry(models.Model):
             'restaurant_id': self.restaurant.pk,
             'name': self.name,
             'description': self.description,
+            'photo_url': self.photo_url,
             'allergens': allergens,
         }
 
