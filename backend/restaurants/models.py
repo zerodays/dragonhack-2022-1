@@ -97,3 +97,6 @@ class MenuEntryAllergen(models.Model):
 
     def __str__(self):
         return self.get_allergen_display()
+
+    class Meta:
+        unique_together = ['menu_entry', 'allergen']
