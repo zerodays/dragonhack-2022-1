@@ -7,8 +7,7 @@ class Restaurant {
   final double latitude;
   final double longitude;
   final double? rating;
-  final double? googleRating;
-  final String? googleIcon;
+  final String? imageURL;
   final Address? address;
 
   const Restaurant(
@@ -18,8 +17,7 @@ class Restaurant {
       required this.latitude,
       required this.longitude,
       required this.rating,
-      required this.googleRating,
-      required this.googleIcon,
+      required this.imageURL,
       required this.address});
 
   factory Restaurant.fromJson(Map<String, dynamic> json) {
@@ -30,8 +28,7 @@ class Restaurant {
         latitude: json['latitude'],
         longitude: json['longitude'],
         rating: json['rating'],
-        googleRating: json['google_rating'],
-        googleIcon: json['google_icon'],
+        imageURL: json['image_url'],
         address: Address.fromJson(json['address']));
   }
 }

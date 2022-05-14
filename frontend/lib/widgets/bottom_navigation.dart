@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/allergens.dart';
+import 'package:frontend/screens/list_screen.dart';
 import 'package:frontend/screens/map_screen.dart';
 import 'package:frontend/screens/wizard_screen.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +34,7 @@ class _BottomNavigationState extends State<BottomNavigation>
 
   static const List<Widget> _navigationOptions = <Widget>[
     MapScreen(),
-    Text("Index 1: List")
+    ListScreen(),
   ];
 
   @override
