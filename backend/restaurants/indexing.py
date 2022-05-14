@@ -32,4 +32,3 @@ def index_restaurant(restaurant: Restaurant):
     rest_dict['menu'] = menu
 
     client.index('restaurants').add_documents([rest_dict])
-    client.index('restaurants').update_documents()
