@@ -1,16 +1,26 @@
-# frontend
+# Frontend
+Allergone helps people with food allergies find places to eat. Using natural language processing, Allergone extracts allergen information from restaurants' menus. People with allergies can finally find places to eat using a mobile or web app.
 
-A new Flutter project.
+Frontend is written using Flutter.
+
+## Requirements
+To run Allergone you must have latest version of Flutter installed. You can compile Allergone for iOS, Android and Web.
+
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+1. install dependencies:
+```
+flutter pub get
+```
 
-A few resources to get you started if this is your first Flutter project:
+2. Run Allergone using:
+```
+flutter run
+```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+3. Set API url in `api/api.dart`
+```
+const apiUrl = 'https://dragonhack.zerodays.dev/api/v1';
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
