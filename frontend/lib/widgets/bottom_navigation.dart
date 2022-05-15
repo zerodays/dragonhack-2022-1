@@ -39,32 +39,85 @@ class _BottomNavigationState extends State<BottomNavigation>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        bottomNavigationBar: NavigationBar(
-          onDestinationSelected: (int index) {
-            if (index >= 2) {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const WizardScreen()));
-              return;
-            }
+    if (MediaQuery.of(context).size.width < 600) {
+      return Scaffold(
+          bottomNavigationBar: NavigationBar(
+            onDestinationSelected: (int index) {
+              if (index >= 2) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const WizardScreen()));
+                return;
+              }
 
-            setState(() {
-              currentPageIndex = index;
-            });
-          },
-          selectedIndex: currentPageIndex,
-          destinations: const [
-            NavigationDestination(icon: Icon(Icons.explore), label: "Map"),
-            NavigationDestination(
-              icon: Icon(Icons.list),
-              label: 'List',
+              setState(() {
+                currentPageIndex = index;
+              });
+            },
+            selectedIndex: currentPageIndex,
+            destinations: const [
+              NavigationDestination(
+                icon: Icon(Icons.explore),
+                label: "Map",
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.list),
+                label: 'List',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.settings),
+                label: 'Settings',
+              ),
+            ],
+          ),
+          body: _navigationOptions.elementAt(currentPageIndex));
+    } else {
+      return Scaffold(
+        body: Row(
+          children: [
+            NavigationRail(
+              selectedIndex: currentPageIndex,
+              onDestinationSelected: (int index) {
+                if (index >= 2) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const WizardScreen()));
+                  return;
+                }
+
+                setState(() {
+                  currentPageIndex = index;
+                });
+              },
+              extended: true,
+              minExtendedWidth: 180,
+              destinations: const [
+                NavigationRailDestination(
+                  icon: Icon(Icons.explore),
+                  label: Text('Map'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.list),
+                  label: Text('List'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.settings),
+                  label: Text('Settings'),
+                ),
+              ],
             ),
-            NavigationDestination(
-              icon: Icon(Icons.settings),
-              label: 'Settings',
+            const VerticalDivider(
+              thickness: 1,
+              width: 1,
+            ),
+            Expanded(
+              child: _navigationOptions.elementAt(currentPageIndex),
             ),
           ],
         ),
-        body: _navigationOptions.elementAt(currentPageIndex));
+      );
+    }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/menu.dart';
 import '../util/constants.dart';
+import 'package:frontend/api/api.dart';
 
 class MenuCard extends StatelessWidget {
   const MenuCard({Key? key, required this.menuData}) : super(key: key);
@@ -15,7 +16,9 @@ class MenuCard extends StatelessWidget {
         isThreeLine: true,
         leading: CircleAvatar(
             backgroundImage: menuData.photoUrl != null
-                ? NetworkImage(menuData.photoUrl!)
+                ? NetworkImage(
+                    '$apiUrl/cigani_cors/?url=${menuData.photoUrl!}',
+                  )
                 : null),
         title: Text(menuData.name),
         subtitle:

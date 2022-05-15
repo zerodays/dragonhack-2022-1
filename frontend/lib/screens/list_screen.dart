@@ -67,7 +67,9 @@ class _RestaurantListCard extends StatelessWidget {
         isThreeLine: true,
         leading: CircleAvatar(
             backgroundImage: restaurant.imageURL != null
-                ? NetworkImage(restaurant.imageURL!)
+                ? NetworkImage(
+                    '$apiUrl/cigani_cors/?url=${restaurant.imageURL!}',
+                  )
                 : null),
         title: Text(restaurant.name),
         subtitle: Text(restaurant.description ?? ''),
