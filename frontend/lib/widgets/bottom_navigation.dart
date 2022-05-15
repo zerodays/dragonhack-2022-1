@@ -40,14 +40,14 @@ class _BottomNavigationState extends State<BottomNavigation>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text(
-            "Find restaurant",
-          ),
-        ),
         bottomNavigationBar: NavigationBar(
           onDestinationSelected: (int index) {
+            if (index >= 2) {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const WizardScreen()));
+              return;
+            }
+
             setState(() {
               currentPageIndex = index;
             });
@@ -58,6 +58,10 @@ class _BottomNavigationState extends State<BottomNavigation>
             NavigationDestination(
               icon: Icon(Icons.list),
               label: 'List',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.settings),
+              label: 'Settings',
             ),
           ],
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/allergens.dart';
 import 'package:frontend/util/constants.dart';
+import 'package:frontend/widgets/bottom_navigation.dart';
 import 'package:provider/provider.dart';
 
 class WizardScreen extends StatefulWidget {
@@ -50,8 +51,8 @@ class _WizardScreenState extends State<WizardScreen>
                           label: Text(entry.key),
                           selected: userAllergens.contains(entry.key),
                           backgroundColor: entry.value,
-                          labelStyle: const TextStyle(
-                              fontWeight: FontWeight.bold),
+                          labelStyle:
+                              const TextStyle(fontWeight: FontWeight.bold),
                           onSelected: (selected) {
                             if (selected) {
                               setState(() {
@@ -69,8 +70,12 @@ class _WizardScreenState extends State<WizardScreen>
                     .toList()),
             TextButton(
                 onPressed: () {
-                  Provider.of<Allergens>(context, listen: false).updateUserAllergens(userAllergens);
-
+                  Provider.of<Allergens>(context, listen: false)
+                      .updateUserAllergens(userAllergens);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const BottomNavigation()));
                 },
                 style: TextButton.styleFrom(
                     textStyle: const TextStyle(

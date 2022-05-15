@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/api/api.dart';
 import 'package:frontend/models/allergens.dart';
 import 'package:frontend/models/restaurant.dart';
+import 'package:frontend/widgets/current_allergens.dart';
 import 'package:frontend/widgets/menu_card.dart';
 import 'package:provider/provider.dart';
 
@@ -30,9 +31,6 @@ class _RestaurantScreenState extends State<RestaurantScreen>
 
   @override
   Widget build(BuildContext context) {
-    final List<String>? userAllergens = context
-        .select<Allergens, List<String>?>((Allergens all) => all.userAllergens);
-    print(userAllergens);
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -58,6 +56,7 @@ class _RestaurantScreenState extends State<RestaurantScreen>
                       "Address: ${widget.restaurant.address?.streetAddress}"),
                   minLeadingWidth: 10,
                 ),
+                const CurrentAllergens(),
                 Expanded(
                     child: FutureBuilder(
                         future: menu,

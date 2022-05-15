@@ -2,5 +2,5 @@ import 'package:flutter/material.dart';
 
 final ThemeData appTheme = ThemeData(
     useMaterial3: true,
-    colorSchemeSeed: const Color(0xff6750a4)
+    colorSchemeSeed: const Color(0x00006c47)
 );
