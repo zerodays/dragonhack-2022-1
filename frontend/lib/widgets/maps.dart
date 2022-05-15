@@ -21,16 +21,6 @@ class _NativeMapsState extends State<NativeMaps> {
     mapController = controller;
   }
 
-  final marker = const Marker(
-    markerId: MarkerId('place_name'),
-    position: LatLng(9.669111, 80.014007),
-    // icon: BitmapDescriptor.,
-    infoWindow: InfoWindow(
-      title: 'title',
-      snippet: 'address',
-    ),
-  );
-
   @override
   Widget build(BuildContext context) {
     return GoogleMap(

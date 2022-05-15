@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/allergens.dart';
-import '../util/constants.dart';
 
 class CurrentAllergens extends StatelessWidget {
   const CurrentAllergens({Key? key}) : super(key: key);
@@ -20,10 +19,9 @@ class CurrentAllergens extends StatelessWidget {
               .map((allergen) => Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Chip(
-                      avatar: CircleAvatar(
-                        backgroundColor: allergenColor[allergen],
-                      ),
-                      label: Text(allergen),
+                      backgroundColor: const Color.fromRGBO(78, 99, 86, 1),
+                      label: Text(allergen,
+                          style: const TextStyle(color: Colors.white)),
                     ),
                   ))
               .toList()),

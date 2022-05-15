@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/menu.dart';
-import '../util/constants.dart';
 import 'package:frontend/api/api.dart';
 
 class MenuCard extends StatelessWidget {
@@ -33,7 +32,10 @@ class MenuCard extends StatelessWidget {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 6.0),
                             child: Chip(
-                              label: Text(allergen),
+                              backgroundColor:
+                                  const Color.fromRGBO(78, 99, 86, 1),
+                              label: Text(allergen,
+                                  style: const TextStyle(color: Colors.white)),
                             ),
                           ))
                       .toList()),

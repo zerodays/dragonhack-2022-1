@@ -49,10 +49,10 @@ class _WizardScreenState extends State<WizardScreen>
                 alignment: WrapAlignment.center,
                 children: allergenColor.entries
                     .map((entry) => ChoiceChip(
-                          label: Text(entry.key),
+                          label: Text(entry.key, style: const TextStyle(color: Colors.white)),
                           selected: userAllergens.contains(entry.key),
-                          backgroundColor: Colors.pink,
-                          selectedColor: Colors.red,
+                          backgroundColor: const Color.fromRGBO(78, 99, 86, 1),
+                          selectedColor: Colors.grey,
                           labelStyle:
                               const TextStyle(fontWeight: FontWeight.bold),
                           onSelected: (selected) {

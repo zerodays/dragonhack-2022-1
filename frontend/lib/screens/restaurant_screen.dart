@@ -34,7 +34,7 @@ class _RestaurantScreenState extends State<RestaurantScreen>
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text(widget.restaurant.name),
+          title: Text(widget.restaurant.name, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
         ),
         body: Row(
           children: [
