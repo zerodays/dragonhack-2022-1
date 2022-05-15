@@ -101,20 +101,18 @@ class _RestaurantList extends StatelessWidget {
       count = 5;
     }
 
-    return Expanded(
-      child: GridView.builder(
-        padding: const EdgeInsets.fromLTRB(8, 72, 8, 0),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: count,
-        ),
-        itemCount: restaurants.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: _RestaurantListCard(restaurant: restaurants[index]),
-          );
-        },
+    return GridView.builder(
+      padding: const EdgeInsets.fromLTRB(8, 72, 8, 0),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: count,
       ),
+      itemCount: restaurants.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: _RestaurantListCard(restaurant: restaurants[index]),
+        );
+      },
     );
   }
 }
