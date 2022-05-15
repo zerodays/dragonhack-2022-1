@@ -13,11 +13,25 @@ class ListScreen extends StatefulWidget {
 
 class _ListScreenState extends State<ListScreen> {
   late Future<List<Restaurant>> restaurants;
+  final TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     restaurants = fetchRestaurants(null);
+  }
+
+  void _clearTextField() {
+    // Clear everything in the text field
+    _controller.clear();
+    // Call setState to update the UI
+    updateSearch(null);
+  }
+
+  void updateSearch(String? val) {
+    setState(() {
+      restaurants = fetchRestaurants(val);
+    });
   }
 
   @override
@@ -26,7 +40,37 @@ class _ListScreenState extends State<ListScreen> {
       future: restaurants,
       builder: (context, AsyncSnapshot<List<Restaurant>> snapshot) {
         if (snapshot.hasData) {
-          return _RestaurantList(restaurants: snapshot.data!);
+          return SafeArea(
+            child: Stack(
+              children: [
+                _RestaurantList(restaurants: snapshot.data!),
+                Container(
+                  margin: const EdgeInsets.all(10.0),
+                  child: TextField(
+                    controller: _controller,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                          borderSide: const BorderSide(
+                            color: Colors.white,
+                            width: 0.0,
+                          )),
+                      labelText: "Search",
+                      suffixIcon: _controller.text.isEmpty
+                          ? null // Show nothing if the text field is empty
+                          : IconButton(
+                              icon: const Icon(Icons.clear),
+                              onPressed: _clearTextField,
+                            ),
+                    ),
+                    onSubmitted: updateSearch,
+                  ),
+                ),
+              ],
+            ),
+          );
         } else if (snapshot.hasError) {
           return const Center(child: Text("Failed to load restaurants"));
         }
@@ -51,54 +95,25 @@ class _RestaurantList extends StatelessWidget {
       count = 2;
     } else if (width < 900) {
       count = 3;
-    } else if (width < 1200){
+    } else if (width < 1200) {
       count = 4;
     } else {
       count = 5;
     }
 
-    return SafeArea(
-      child: Stack(
-        children: [
-          Expanded(
-            child: GridView.builder(
-              padding: const EdgeInsets.fromLTRB(8, 72, 8, 0),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: count,
-              ),
-              itemCount: restaurants.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: _RestaurantListCard(restaurant: restaurants[index]),
-                );
-              },
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.all(10.0),
-            child: TextField(
-              // controller: _controller,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                    borderSide: const BorderSide(
-                      color: Colors.white,
-                      width: 0.0,
-                    )),
-                labelText: "Search",
-                // suffixIcon: _controller.text.isEmpty
-                //     ? null // Show nothing if the text field is empty
-                //     : IconButton(
-                //   icon: const Icon(Icons.clear),
-                //   // onPressed: _clearTextField,
-              ), // Show the clear button if the text field has something
-            ),
-          ),
-          // onSubmitted: updateSearch,
-        ],
+    return Expanded(
+      child: GridView.builder(
+        padding: const EdgeInsets.fromLTRB(8, 72, 8, 0),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: count,
+        ),
+        itemCount: restaurants.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: _RestaurantListCard(restaurant: restaurants[index]),
+          );
+        },
       ),
     );
   }
@@ -132,11 +147,13 @@ class _RestaurantListCard extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(4.0, 4.0, 4.0, 0.0),
                 child: Text(
                   restaurant.name,
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(height: 0.0),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                padding: const EdgeInsets.fromLTRB(4.0, 0, 4.0, 4.0),
                 child: Text(
                   restaurant.description ?? '',
                   style: Theme.of(context).textTheme.bodySmall,
@@ -157,21 +174,5 @@ class _RestaurantListCard extends StatelessWidget {
         },
       ),
     );
-    // child:
-    // Card(
-    //   child:,
-    //   // title: Text(restaurant.name),
-    //   // subtitle: Text(restaurant.description ?? ''),
-    //   // onTap: () {
-    //   //   Navigator.push(
-    //   //     context,
-    //   //     MaterialPageRoute(
-    //   //       builder: (context) => RestaurantScreen(restaurant: restaurant),
-    //   //     ),
-    //   //   );
-    //   // },
-    //
-    // );
-    // // );
   }
 }
