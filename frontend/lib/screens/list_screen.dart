@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:frontend/api/api.dart';
+import 'package:frontend/models/allergens.dart';
 import 'package:frontend/models/restaurant.dart';
 import 'package:frontend/screens/restaurant_screen.dart';
+import 'package:provider/provider.dart';
 
 class ListScreen extends StatefulWidget {
   const ListScreen({Key? key}) : super(key: key);
@@ -18,7 +20,8 @@ class _ListScreenState extends State<ListScreen> {
   @override
   void initState() {
     super.initState();
-    restaurants = fetchRestaurants(null);
+    restaurants = fetchRestaurants(
+        null, Provider.of<Allergens>(context, listen: false).userAllergens);
   }
 
   void _clearTextField() {
@@ -30,7 +33,8 @@ class _ListScreenState extends State<ListScreen> {
 
   void updateSearch(String? val) {
     setState(() {
-      restaurants = fetchRestaurants(val);
+      restaurants = fetchRestaurants(
+          val, Provider.of<Allergens>(context, listen: false).userAllergens);
     });
   }
 

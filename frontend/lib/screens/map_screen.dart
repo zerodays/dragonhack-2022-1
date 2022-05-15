@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/api/api.dart';
+import 'package:frontend/models/allergens.dart';
 import 'package:frontend/models/restaurant.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/maps.dart';
 
@@ -19,7 +21,8 @@ class _MapScreenState extends State<MapScreen> {
   @override
   void initState() {
     super.initState();
-    restaurants = fetchRestaurants(search);
+    restaurants = fetchRestaurants(
+        search, Provider.of<Allergens>(context, listen: false).userAllergens);
   }
 
   void _clearTextField() {
@@ -37,7 +40,8 @@ class _MapScreenState extends State<MapScreen> {
         search = val;
       }
 
-      restaurants = fetchRestaurants(search);
+      restaurants = fetchRestaurants(
+          search, Provider.of<Allergens>(context, listen: false).userAllergens);
     });
   }
 

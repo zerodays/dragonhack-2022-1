@@ -7,10 +7,18 @@ import '../models/menu.dart';
 
 const apiUrl = 'https://dragonhack.zerodays.dev/api/v1';
 
-Future<List<Restaurant>> fetchRestaurants(String? search) async {
+Future<List<Restaurant>> fetchRestaurants(
+    String? search, List<String>? filter) async {
   var url = '$apiUrl/restaurants/';
   if (search != null) {
     url += '?search=$search';
+  } else {
+    url += "?search=";
+  }
+
+  final joinedFilter = filter?.join(",").toUpperCase().replaceAll(" ", "_");
+  if (joinedFilter != null) {
+    url += "&exclude=$joinedFilter";
   }
 
   final response = await http.get(Uri.parse(url));
@@ -30,17 +38,16 @@ Future<List<Restaurant>> fetchRestaurants(String? search) async {
 }
 
 Future<List<Menu>> fetchMenu(int restaurantId, List<String>? filter) async {
-
-  final joinedFilter = filter?.join(",").toUpperCase();
+  final joinedFilter = filter?.join(",").toUpperCase().replaceAll(" ", "_");
 
   print(joinedFilter);
 
   final url = filter != null
-      ? Uri.parse('$apiUrl/restaurants/$restaurantId/menu/?exclude=$joinedFilter')
+      ? Uri.parse(
+          '$apiUrl/restaurants/$restaurantId/menu/?exclude=$joinedFilter')
       : Uri.parse('$apiUrl/restaurants/$restaurantId/menu/');
 
-  final response =
-      await http.get(url);
+  final response = await http.get(url);
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
@@ -55,6 +62,3 @@ Future<List<Menu>> fetchMenu(int restaurantId, List<String>? filter) async {
     throw Exception('Failed to load restaurants');
   }
 }
-
-
-
