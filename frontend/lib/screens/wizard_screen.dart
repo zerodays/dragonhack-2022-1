@@ -45,12 +45,14 @@ class _WizardScreenState extends State<WizardScreen>
             ),
             Wrap(
                 spacing: 10.0,
+                runSpacing: 10.0,
                 alignment: WrapAlignment.center,
                 children: allergenColor.entries
                     .map((entry) => ChoiceChip(
                           label: Text(entry.key),
                           selected: userAllergens.contains(entry.key),
-                          backgroundColor: entry.value,
+                          backgroundColor: Colors.pink,
+                          selectedColor: Colors.red,
                           labelStyle:
                               const TextStyle(fontWeight: FontWeight.bold),
                           onSelected: (selected) {
@@ -68,7 +70,7 @@ class _WizardScreenState extends State<WizardScreen>
                           },
                         ))
                     .toList()),
-            TextButton(
+            ElevatedButton(
                 onPressed: () {
                   Provider.of<Allergens>(context, listen: false)
                       .updateUserAllergens(userAllergens);
@@ -80,7 +82,7 @@ class _WizardScreenState extends State<WizardScreen>
                 style: TextButton.styleFrom(
                     textStyle: const TextStyle(
                         fontSize: 18.0, fontWeight: FontWeight.bold)),
-                child: const Text("Next"))
+                child: const Text("Save"))
           ],
         ),
       ),

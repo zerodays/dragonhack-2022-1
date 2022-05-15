@@ -21,19 +21,25 @@ class MenuCard extends StatelessWidget {
                   )
                 : null),
         title: Text(menuData.name),
-        subtitle:
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(menuData.description ?? ""),
-          Row(
-              children: menuData.allergens
-                  .map((allergen) => Chip(
-                        avatar: CircleAvatar(
-                          backgroundColor: allergenColor[allergen],
-                        ),
-                        label: Text(allergen),
-                      ))
-                  .toList()),
-        ]),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(menuData.description ?? ""),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Row(
+                  children: menuData.allergens
+                      .map((allergen) => Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 6.0),
+                            child: Chip(
+                              label: Text(allergen),
+                            ),
+                          ))
+                      .toList()),
+            ),
+          ],
+        ),
       ),
     );
   }
