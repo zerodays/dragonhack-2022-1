@@ -51,7 +51,8 @@ class _MapScreenState extends State<MapScreen> {
               child: Stack(children: [
                 FutureBuilder(
                     future: restaurants,
-                    builder: (context, AsyncSnapshot<List<Restaurant>> snapshot) {
+                    builder:
+                        (context, AsyncSnapshot<List<Restaurant>> snapshot) {
                       if (snapshot.hasData) {
                         return NativeMaps(markers: snapshot.data!);
                       } else if (snapshot.hasError) {
@@ -66,14 +67,18 @@ class _MapScreenState extends State<MapScreen> {
                     controller: _controller,
                     decoration: InputDecoration(
                       filled: true,
+                      hintText: "Search",
                       fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                        borderSide:
+                            const BorderSide(color: Colors.grey, width: 0.5),
+                      ),
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                          borderSide: const BorderSide(
-                            color: Colors.white,
-                            width: 0.0,
-                          )),
-                      labelText: "Search",
+                        borderRadius: BorderRadius.circular(15.0),
+                        borderSide:
+                            const BorderSide(color: Colors.grey, width: 0.0),
+                      ),
                       suffixIcon: _controller.text.isEmpty
                           ? null // Show nothing if the text field is empty
                           : IconButton(

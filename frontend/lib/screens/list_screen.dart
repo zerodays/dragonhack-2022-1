@@ -50,20 +50,24 @@ class _ListScreenState extends State<ListScreen> {
                     controller: _controller,
                     decoration: InputDecoration(
                       filled: true,
+                      hintText: "Search",
                       fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                        borderSide:
+                            const BorderSide(color: Colors.grey, width: 0.5),
+                      ),
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                          borderSide: const BorderSide(
-                            color: Colors.white,
-                            width: 0.0,
-                          )),
-                      labelText: "Search",
+                        borderRadius: BorderRadius.circular(15.0),
+                        borderSide:
+                            const BorderSide(color: Colors.grey, width: 0.0),
+                      ),
                       suffixIcon: _controller.text.isEmpty
                           ? null // Show nothing if the text field is empty
                           : IconButton(
                               icon: const Icon(Icons.clear),
                               onPressed: _clearTextField,
-                            ),
+                            ), // Show the clear button if the text field has something
                     ),
                     onSubmitted: updateSearch,
                   ),
@@ -145,7 +149,10 @@ class _RestaurantListCard extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(4.0, 4.0, 4.0, 0.0),
                 child: Text(
                   restaurant.name,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(height: 0.0),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(height: 0.0),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
