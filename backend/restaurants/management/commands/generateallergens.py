@@ -38,6 +38,8 @@ def generate_allergens_for_entry(entry: MenuEntry):
             'burger',
             'burek',
             'skut',
+            'pica',
+            'picin',
         },
         MenuEntryAllergen.Allergen.CRUSTACEANS: {
             'crustacean',
