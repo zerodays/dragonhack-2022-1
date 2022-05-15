@@ -3,7 +3,7 @@ import 'package:frontend/api/api.dart';
 import 'package:frontend/models/restaurant.dart';
 import 'package:frontend/screens/restaurant_screen.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
+import 'package:flutter/foundation.dart' show kIsWeb;
 import '../widgets/maps.dart';
 
 class MapScreen extends StatefulWidget {
@@ -54,21 +54,11 @@ class _MapScreenState extends State<MapScreen> {
                   future: restaurants,
                   builder: (context, AsyncSnapshot<List<Restaurant>> snapshot) {
                     if (snapshot.hasData) {
-                      // Get markers
-                      var markers = snapshot.data!
-                          .map((e) => Marker(
-                              markerId: MarkerId(e.name),
-                              position: LatLng(e.latitude, e.longitude),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          RestaurantScreen(restaurant: e)),
-                                );
-                              }))
-                          .toSet();
-                      return Maps(markers: markers);
+                      if (kIsWeb) {
+                        return NativeMaps(markers: snapshot.data!);
+                      } else {
+                        return NativeMaps(markers: snapshot.data!);
+                      }
                     } else if (snapshot.hasError) {
                       return const Center(
                           child: Text("Failed to load restaurants"));
