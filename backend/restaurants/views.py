@@ -1,6 +1,7 @@
 import json
 
 import meilisearch
+import requests
 from django.db.models import OuterRef, Exists, Q
 from django.http import HttpResponse
 from django.views.decorators.http import require_GET
@@ -63,3 +64,10 @@ def menu_view(request, restaurant_pk):
 
     menu = util.to_list(menu)
     return json_response(menu)
+
+
+@require_GET
+def cigani_cors_view(request):
+    url = request.GET.get('url')
+    resp = requests.get(url)
+    return HttpResponse(resp.content, content_type=resp.headers.get('content-type'), status=resp.status_code)
