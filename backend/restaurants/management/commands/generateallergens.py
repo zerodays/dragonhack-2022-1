@@ -37,7 +37,6 @@ def generate_allergens_for_entry(entry: MenuEntry):
             'wheet',
             'burger',
             'burek',
-            'skut',
             'pica',
             'picin',
         },
@@ -105,6 +104,7 @@ def generate_allergens_for_entry(entry: MenuEntry):
             'maslu',
             'maslom',
             'butter',
+            'skut',
         },
         MenuEntryAllergen.Allergen.NUTS: {
             'nut',
