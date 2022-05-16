@@ -1,6 +1,6 @@
 # Allergone
 
-Allergone is our Dragonhack 2022 submission.
+Allergone is our Dragonhack 2022 submission that won Best Code Quality challenge.
 Allergone helps people with food allergies find places to eat. Using natural language processing, Allergone extracts allergen information from restaurants' menus. People with allergies can finally find places to eat using a mobile or web app.
 
 ## Project architecture
