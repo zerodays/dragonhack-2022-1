@@ -3,6 +3,22 @@
 Allergone is our Dragonhack 2022 submission.
 Allergone helps people with food allergies find places to eat. Using natural language processing, Allergone extracts allergen information from restaurants' menus. People with allergies can finally find places to eat using a mobile or web app.
 
+## Screenshots
+
+### Mobile app
+
+<img src="screenshots/mobile/onboarding_1.png" width="256"/>
+<img src="screenshots/mobile/onboarding_2.png" width="256"/>
+<img src="screenshots/mobile/map.png" width="256"/>
+<img src="screenshots/mobile/list.png" width="256"/>
+<img src="screenshots/mobile/search.png" width="256"/>
+<img src="screenshots/mobile/details.png" width="256"/>
+
+### Web app
+
+<img src="screenshots/web/list.png" width="512"/>
+<img src="screenshots/web/details.png" width="512"/>
+
 ## Project architecture
 
 The following technologies are used:
